@@ -17,6 +17,11 @@ This crate intend wrap all components.
 ```bash
 # This requires the nighly rust compiler version.
 rustup default nightly
+# optionally, if you want the nightly compiler only for this repo use:
+# rustup override set nightly
+
+# Add the wasm target
+rustup target add wasm32-unknown-unknown
 
 # install trunk via cargo
 cargo install --locked trunk
@@ -25,6 +30,7 @@ cargo install --locked trunk
 ## Running / testing
 
 ```bash
+# should open a browser on http://localhost:8080 with a demonstration of the components.
 trunk serve --open
 ```
 

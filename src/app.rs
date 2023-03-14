@@ -33,6 +33,7 @@ pub fn App(cx: Scope) -> impl IntoView {
 #[component]
 fn HomePage(cx: Scope) -> impl IntoView {
     let check = create_rw_signal(cx, false);
+    let progress = create_rw_signal(cx, 0.0);
 
     view! {
         cx,
@@ -42,7 +43,7 @@ fn HomePage(cx: Scope) -> impl IntoView {
             <h3>"Card sample"</h3>
             <MdcTextField label="text field"/>
 
-            <MdcButton label="text button"/>
+            <MdcButton label="text button" pre_icon="settings" click=Box::new(move |_| progress.set(progress.get() + 0.1))/>
 
             <MDCFormField label="CheckBox">
                 <MDCCheckbox value=check/>
@@ -53,6 +54,8 @@ fn HomePage(cx: Scope) -> impl IntoView {
             <MDCFormField label="Disabled">
                 <MDCCheckbox disabled=true value=check/>
             </MDCFormField>
+
+            <MdcLinearProgress value=progress/>
         </MdcCard>
     }
 }
