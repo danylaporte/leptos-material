@@ -39,11 +39,15 @@ fn HomePage(cx: Scope) -> impl IntoView {
         cx,
         <h1>"Material with Leptos"</h1>
 
-        <MdcCard>
+        <MDCCard>
             <h3>"Card sample"</h3>
-            <MdcTextField label="text field"/>
+            <MDCTextField label="text field"/>
 
-            <MdcButton label="text button" pre_icon="settings" click=Box::new(move |_| progress.set(progress.get() + 0.1))/>
+            <MDCButton label="text button" pre_icon="settings" click=Box::new(move |_| progress.set(progress.get() + 0.1))/>
+
+            <MDCFormField label="Switch">
+                <MDCSwitch value=check/>
+            </MDCFormField>
 
             <MDCFormField label="CheckBox">
                 <MDCCheckbox value=check/>
@@ -55,7 +59,7 @@ fn HomePage(cx: Scope) -> impl IntoView {
                 <MDCCheckbox disabled=true value=check/>
             </MDCFormField>
 
-            <MdcLinearProgress value=progress/>
-        </MdcCard>
+            <MDCLinearProgress value=progress/>
+        </MDCCard>
     }
 }

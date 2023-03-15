@@ -1,4 +1,4 @@
-use leptos::{warn, RwSignal, Signal, SignalGet, SignalSet};
+use leptos::{RwSignal, Signal, SignalGet, SignalSet, SignalUpdate};
 
 #[derive(Clone, Copy)]
 pub enum Prop<T: 'static> {
@@ -60,9 +60,7 @@ impl<T: Clone> SignalSet<T> for Prop<T> {
     fn set(&self, new_value: T) {
         match self {
             Self::RwSignal(s) => s.set(new_value),
-            Self::Static(_) | Self::Signal(_) => {
-                warn!("ReadOnly Prop value drop");
-            }
+            Self::Static(_) | Self::Signal(_) => {}
         }
     }
 
@@ -71,6 +69,22 @@ impl<T: Clone> SignalSet<T> for Prop<T> {
         match self {
             Self::RwSignal(s) => s.try_set(new_value),
             Self::Static(_) | Self::Signal(_) => Some(new_value),
+        }
+    }
+}
+
+impl<T> SignalUpdate<T> for Prop<T> {
+    fn update(&self, f: impl FnOnce(&mut T)) {
+        match self {
+            Self::RwSignal(s) => s.update(f),
+            Self::Signal(_) | Self::Static(_) => {}
+        }
+    }
+
+    fn try_update<O>(&self, f: impl FnOnce(&mut T) -> O) -> Option<O> {
+        match self {
+            Self::RwSignal(s) => s.try_update(f),
+            Self::Signal(_) | Self::Static(_) => None,
         }
     }
 }

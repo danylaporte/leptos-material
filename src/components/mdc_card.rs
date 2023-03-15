@@ -1,7 +1,7 @@
 use leptos::{component, view, Fragment, IntoView, Scope};
 
 #[component]
-pub fn MdcCard(cx: Scope, children: Box<dyn Fn(Scope) -> Fragment>) -> impl IntoView {
+pub fn MDCCard(cx: Scope, children: Box<dyn Fn(Scope) -> Fragment>) -> impl IntoView {
     view! {
         cx,
         <div class="mdc-card">{children(cx)}</div>

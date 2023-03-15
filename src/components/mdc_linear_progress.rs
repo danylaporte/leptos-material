@@ -1,21 +1,22 @@
 use crate::{composables::Prop, utils::apply_to};
 use js_sys::Number;
-use leptos::{component, create_effect, view, IntoView, Scope, Signal, SignalGet};
+use leptos::{component, create_effect, view, IntoView, Scope, SignalGet};
 use wasm_bindgen::prelude::*;
 use web_sys::Element;
 
 #[component]
-pub fn MdcLinearProgress(
+pub fn MDCLinearProgress(
     cx: Scope,
     /// value should be between 0.0 and 1.0
     #[prop(into)]
     value: Prop<f64>,
 ) -> impl IntoView {
     let progress_ref = apply_to(cx, move |e| {
-        let value = Signal::derive(cx, move || Number::from(value.get()));
         let progress = attach_to(&e);
 
-        create_effect(cx, move |_| progress.set_progress(value.get()));
+        create_effect(cx, move |_| {
+            progress.set_progress(Number::from(value.get()))
+        });
     });
 
     view! {

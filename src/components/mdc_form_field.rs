@@ -1,6 +1,6 @@
 use crate::composables::Prop;
 use js_sys::Reflect;
-use leptos::{component, view, Fragment, IntoView, Scope};
+use leptos::{component, view, Fragment, IntoView, Scope, SignalGet};
 use wasm_bindgen::prelude::*;
 use web_sys::Element;
 
@@ -14,7 +14,7 @@ pub fn MDCFormField(
         cx,
         <div class="mdc-form-field">
             {children(cx)}
-            <label>{label}</label>
+            <label>{move || label.get()}</label>
         </div>
     }
 }

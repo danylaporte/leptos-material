@@ -3,7 +3,7 @@ use crate::{
     composables::{write_checked, Prop},
     utils::apply_to,
 };
-use leptos::{component, create_effect, view, IntoView, MaybeSignal, Scope};
+use leptos::{component, create_effect, view, IntoView, MaybeSignal, Scope, SignalGet};
 use std::sync::atomic::{AtomicUsize, Ordering::Relaxed};
 use wasm_bindgen::prelude::*;
 use web_sys::HtmlElement;
@@ -24,7 +24,7 @@ pub fn MDCCheckbox(
         let chk = attach_checkbox(element);
 
         link_with_form_field(element, &id2, &chk);
-        create_effect(cx, move |_| chk.set_indeterminate(indeterminate()));
+        create_effect(cx, move |_| chk.set_indeterminate(indeterminate.get()));
     });
 
     view! {
@@ -33,10 +33,11 @@ pub fn MDCCheckbox(
             <div class="mdc-checkbox mdc-checkbox--touch" _ref=chk_ref>
                 <input type="checkbox"
                     class="mdc-checkbox__native-control"
-                    prop:checked=value
+                    id=id
                     on:input=write_checked(value)
-                    prop:disabled=disabled
-                    id=id/>
+                    prop:checked=move || value.get()
+                    prop:disabled=move || disabled.get()
+                />
                 <div class="mdc-checkbox__background">
                 <svg class="mdc-checkbox__checkmark"
                     viewBox="0 0 24 24">
@@ -60,8 +61,8 @@ extern "C" {
     fn attach_checkbox(element: &HtmlElement) -> Checkbox;
 
     #[wasm_bindgen(method, js_name = "indeterminate", getter)]
-    fn indeterminate(chk: &Checkbox) -> bool;
+    fn indeterminate(this: &Checkbox) -> bool;
 
     #[wasm_bindgen(method, js_name = "indeterminate", setter)]
-    fn set_indeterminate(chk: &Checkbox, value: bool);
+    fn set_indeterminate(this: &Checkbox, value: bool);
 }

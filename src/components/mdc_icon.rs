@@ -1,7 +1,7 @@
 use crate::composables::{NodeRefReady, Prop};
 use leptos::{
     component, create_node_ref, html::I, view, HtmlElement, IntoView, NodeRef, Scope, Show,
-    ShowProps,
+    ShowProps, SignalGet,
 };
 
 #[component]
@@ -11,8 +11,8 @@ pub fn MDCIcon(cx: Scope, #[prop(into)] name: Prop<String>) -> impl IntoView {
 
     view! {
         cx,
-        <Show when=move || !name2().is_empty() fallback=|_| ()>
-            <i class="material-icons" _ref=node_ref aria-hidden="true">{name()}</i>
+        <Show when=move || !name2.get().is_empty() fallback=|_| ()>
+            <i class="material-icons" _ref=node_ref aria-hidden="true">{name.get()}</i>
         </Show>
     }
 }

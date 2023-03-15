@@ -15,11 +15,6 @@ This crate intend wrap all components.
 ## Installation
 
 ```bash
-# This requires the nighly rust compiler version.
-rustup default nightly
-# optionally, if you want the nightly compiler only for this repo use:
-# rustup override set nightly
-
 # Add the wasm target
 rustup target add wasm32-unknown-unknown
 
