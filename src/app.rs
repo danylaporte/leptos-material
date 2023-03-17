@@ -40,10 +40,31 @@ fn HomePage(cx: Scope) -> impl IntoView {
         <h1>"Material with Leptos"</h1>
 
         <MDCCard>
+            <h3>"Buttons"</h3>
+
+            <MDCButton
+                label="Outline button with icon"
+                pre_icon="settings"
+                style=ButtonStyle::Outlined/>
+
+            <MDCButton
+                label="Text button"
+                style=ButtonStyle::Text/>
+
+            <MDCButton
+                label="Contained button"
+                style=ButtonStyle::Contained/>
+        </MDCCard>
+
+        <MDCCard>
             <h3>"Card sample"</h3>
             <MDCTextField label="text field"/>
 
-            <MDCButton label="text button" pre_icon="settings" click=Box::new(move |_| progress.set(progress.get() + 0.1))/>
+            <MDCButton
+                label="text button"
+                pre_icon="settings"
+                style=ButtonStyle::Outlined
+                click=Box::new(move |_| progress.set(progress.get() + 0.1))/>
 
             <MDCFormField label="Switch">
                 <MDCSwitch value=check/>

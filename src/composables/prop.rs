@@ -1,4 +1,4 @@
-use leptos::{RwSignal, Signal, SignalGet, SignalSet, SignalUpdate};
+use leptos::{RwSignal, Signal, SignalGet, SignalSet, SignalUpdate, SignalWith};
 
 #[derive(Clone, Copy)]
 pub enum Prop<T: 'static> {
@@ -85,6 +85,24 @@ impl<T> SignalUpdate<T> for Prop<T> {
         match self {
             Self::RwSignal(s) => s.try_update(f),
             Self::Signal(_) | Self::Static(_) => None,
+        }
+    }
+}
+
+impl<T> SignalWith<T> for Prop<T> {
+    fn with<O>(&self, f: impl FnOnce(&T) -> O) -> O {
+        match self {
+            Self::RwSignal(s) => s.with(f),
+            Self::Signal(s) => s.with(f),
+            Self::Static(s) => f(s),
+        }
+    }
+
+    fn try_with<O>(&self, f: impl FnOnce(&T) -> O) -> Option<O> {
+        match self {
+            Self::RwSignal(s) => s.try_with(f),
+            Self::Signal(s) => s.try_with(f),
+            Self::Static(s) => Some(f(s)),
         }
     }
 }
