@@ -1,5 +1,8 @@
+mod mdc_id;
+
 use leptos::NodeRef;
 use leptos::{create_node_ref, html::ElementDescriptor, set_timeout, Scope};
+pub use mdc_id::{mdc_id, MDCId};
 use std::ops::Deref;
 use std::time::Duration;
 use wasm_bindgen::JsCast;

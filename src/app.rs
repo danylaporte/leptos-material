@@ -82,5 +82,29 @@ fn HomePage(cx: Scope) -> impl IntoView {
 
             <MDCLinearProgress value=progress/>
         </MDCCard>
+
+        <MDCCard>
+            <h3>"Single Line List"</h3>
+
+            <MDCList>
+                <MDCListItem line1="Item 1"/>
+                <MDCListItem line1="Item 2"/>
+                <MDCListItem line1="Item 3"/>
+                <MDCListDivider/>
+                <MDCListItem line1="Others" />
+            </MDCList>
+        </MDCCard>
+
+        <MDCCard>
+            <h3>"Two Line List"</h3>
+
+            <MDCList2>
+                <MDCList2Item line1="Item 1" line2="sub title" />
+                <MDCList2Item line1="Item 2" line2="sub title" />
+                <MDCList2Item line1="Item 3" line2="sub title" />
+                <MDCListDivider/>
+                <MDCList2Item line1="Others" line2="sub title" />
+            </MDCList2>
+        </MDCCard>
     }
 }

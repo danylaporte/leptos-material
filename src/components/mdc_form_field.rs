@@ -1,4 +1,4 @@
-use crate::composables::Prop;
+use crate::{composables::Prop, utils::MDCId};
 use js_sys::Reflect;
 use leptos::{component, view, Fragment, IntoView, Scope, SignalGet};
 use wasm_bindgen::prelude::*;
@@ -33,10 +33,10 @@ fn find_mdc_form_field_from_child(v: &Element) -> Option<Element> {
     None
 }
 
-pub(crate) fn link_with_form_field(linked_element: &Element, id: &str, linked_instance: &JsValue) {
+pub(crate) fn link_with_form_field(linked_element: &Element, id: MDCId, linked_instance: &JsValue) {
     if let Some(form_field) = find_mdc_form_field_from_child(linked_element) {
         if let Some(label) = form_field.get_elements_by_tag_name("label").item(0) {
-            let _ = label.set_attribute("for", id);
+            let _ = label.set_attribute("for", &id.to_string());
         }
 
         let form_field = attach_form_field(&form_field);

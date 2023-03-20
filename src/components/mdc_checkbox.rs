@@ -1,14 +1,11 @@
 use super::mdc_form_field::link_with_form_field;
 use crate::{
     composables::{write_checked, Prop},
-    utils::apply_to,
+    utils::{apply_to, mdc_id},
 };
 use leptos::{component, create_effect, view, IntoView, MaybeSignal, Scope, SignalGet};
-use std::sync::atomic::{AtomicUsize, Ordering::Relaxed};
 use wasm_bindgen::prelude::*;
 use web_sys::HtmlElement;
-
-static ID: AtomicUsize = AtomicUsize::new(0);
 
 #[component]
 pub fn MDCCheckbox(
@@ -17,13 +14,12 @@ pub fn MDCCheckbox(
     #[prop(into, optional)] indeterminate: Prop<bool>,
     #[prop(into)] value: Prop<bool>,
 ) -> impl IntoView {
-    let id = format!("chk{}", ID.fetch_add(1, Relaxed));
-    let id2 = id.clone();
+    let id = mdc_id();
 
     let chk_ref = apply_to(cx, move |element: &HtmlElement| {
         let chk = attach_checkbox(element);
 
-        link_with_form_field(element, &id2, &chk);
+        link_with_form_field(element, id, &chk);
         create_effect(cx, move |_| chk.set_indeterminate(indeterminate.get()));
     });
 

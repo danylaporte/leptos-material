@@ -1,11 +1,11 @@
 use super::mdc_form_field::link_with_form_field;
-use crate::{composables::Prop, utils::apply_to};
+use crate::{
+    composables::Prop,
+    utils::{apply_to, mdc_id},
+};
 use leptos::{component, create_effect, view, IntoView, Scope, SignalGet, SignalUpdate};
-use std::sync::atomic::{AtomicUsize, Ordering::Relaxed};
 use wasm_bindgen::prelude::*;
 use web_sys::HtmlElement;
-
-static ID: AtomicUsize = AtomicUsize::new(0);
 
 #[component]
 pub fn MDCSwitch(
@@ -13,13 +13,12 @@ pub fn MDCSwitch(
     #[prop(into, optional)] disabled: Prop<bool>,
     #[prop(into)] value: Prop<bool>,
 ) -> impl IntoView {
-    let id = format!("swt{}", ID.fetch_add(1, Relaxed));
-    let id2 = id.clone();
+    let id = mdc_id();
 
     let swt_ref = apply_to(cx, move |element: &HtmlElement| {
         let swt = attach_switch(element);
 
-        link_with_form_field(element, &id2, &swt);
+        link_with_form_field(element, id, &swt);
 
         create_effect(cx, move |_| {
             swt.set_disabled(disabled.get());
